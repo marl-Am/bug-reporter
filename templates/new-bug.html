@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <title>Create</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-2">
+                <p><a class="btn btn-outline-success" href="/dashboard">
+                        <i class="bi bi-arrow-left-square-fill"></i> Back</a>
+                </p>
+            </div>
+            <div class="col-6">
+                <h2>Add Bug Report</h2>
+                <form action="#" th:action="@{/bug}" th:object="${bug}" method="POST">
+                    <div class="form-group">
+
+                        <div class="col-6">
+                            <label for="title">Title</label>
+                            <input class="form-control" type="text" th:field="*{title}" id="title" placeholder="Title">
+                        </div>
+
+                        <div class="col-6">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" rows="10" type="text" th:field="*{description}"
+                                id="description" placeholder="Description"></textarea>
+                        </div>
+
+                        <!--          <div class="col-6">-->
+                        <!--            <label for="status">Status</label>-->
+                        <!--            <select class="" id="status" th:field="*{status}">-->
+                        <!--              <option value="OPEN">OPEN</option>-->
+                        <!--              <option value="TESTING">TESTING</option>-->
+                        <!--              <option value="COMPLETE">COMPLETE</option>-->
+                        <!--            </select>-->
+                        <!--          </div>-->
+
+
+                        <input type="hidden" th:field="*{createdOn}" />
+                        <input type="hidden" th:field="*{updatedOn}" />
+
+                        <button type="submit" class="btn btn-outline-success mt-2">
+                            <i class="bi bi-plus-square-fill"></i> Add Bug
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>-->
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

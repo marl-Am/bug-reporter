@@ -1,0 +1,14 @@
+.cover-container a {
+    text-decoration: none;
+    /* remove underline */
+    color: inherit;
+    /* remove blue */
+}
+
+.cover-container a:hover {
+    text-decoration: underline;
+}
+
+.cover-container .social {
+    margin: 5px;
+}
