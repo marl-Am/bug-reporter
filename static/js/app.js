@@ -1,80 +1,44 @@
-// const openButton = document.getElementById("open-button");
-// const testingButton = document.getElementById("testing-button");
-// const completeButton = document.getElementById("complete-button");
 
-// const bugs = document.getElementsByClassName("bug");
+// filter tasks
+function filterTasks(status) {
+    if (status === 'All') { }
+    else if (status === 'open') { }
+    else if (status === 'testing') { }
+    else { }
+}
 
-// openButton.addEventListener("click", () => {
-//   showLoadingSpinner();
-//   filterBugs("OPEN");
-//   hideLoadingSpinner();
-// });
+// User details
+window.onload = function () {
+    // Get references to the password inputs and the submit button
+    const passwordInput = document.getElementById("password");
+    const retypePasswordInput = document.getElementById("retype-password");
+    const submitButton = document.querySelector("button[type='submit']");
 
-// testingButton.addEventListener("click", () => {
-//   showLoadingSpinner();
-//   filterBugs("TESTING");
-//   hideLoadingSpinner();
-// });
+    // Add event listeners to the password inputs
+    passwordInput.addEventListener("input", checkPasswordsMatch);
+    retypePasswordInput.addEventListener("input", checkPasswordsMatch);
 
-// completeButton.addEventListener("click", () => {
-//   showLoadingSpinner();
-//   filterBugs("COMPLETE");
-//   hideLoadingSpinner();
-// });
+    // Check if the passwords match and update the message and submit button
+    function checkPasswordsMatch() {
+        const password = passwordInput.value;
+        const retypePassword = retypePasswordInput.value;
+        const matchMessages = document.querySelectorAll(".do-passwords-match");
+        if (password === retypePassword) {
+            matchMessages.forEach(matchMessage => {
+                matchMessage.textContent = "Passwords match";
+                matchMessage.classList.remove("text-danger");
+                matchMessage.classList.add("text-success");
+            });
+            submitButton.disabled = false;
+        } else {
+            matchMessages.forEach(matchMessage => {
+                matchMessage.textContent = "Passwords do not match";
+                matchMessage.classList.remove("text-success");
+                matchMessage.classList.add("text-danger");
+            });
+            submitButton.disabled = true;
+        }
+    }
 
-// //function filterBugs(status) {
-// //  Array.from(bugs).forEach(bug => {
-// //    if (bug.getAttribute("data-status") === status) {
-// //      bug.style.display = "block";
-// //    } else {
-// //      bug.style.display = "none";
-// //    }
-// //  });
-// //}
-
-// function showLoadingSpinner() {
-//   const loadingSpinner = document.getElementById("loading-spinner");
-//   loadingSpinner.classList.remove("d-none");
-// }
-
-// function hideLoadingSpinner() {
-//   const loadingSpinner = document.getElementById("loading-spinner");
-//   loadingSpinner.classList.add("d-none");
-// }
-
-// //function filterBugs(status) {
-// //// Hide all bugs
-// //$('#bugs li').hide();
-// //
-// //// Show only the bugs with the specified status
-// //$('#bugs li[data-status="' + status + '"]').show();
-// //}
-
-
-// function filterBugs(status) {
-//     var bugs = document.querySelectorAll('.card');
-//     for (var i = 0; i < bugs.length; i++) {
-//         var bug = bugs[i];
-//         var bugStatus = bug.querySelector('.text-muted').textContent;
-//         if (bugStatus === status) {
-//             bug.style.display = "block";
-//         }
-//         else if (status === 'ALL'){
-//             bug.style.display = "block";
-//         }
-//         else {
-//             bug.style.display = "none";
-//         }
-//     }
-// }
-
-// //function filterBugs(status) {
-// //    var elements = document.getElementsByClassName("status-" + status);
-// //    for (var i = 0; i < elements.length; i++) {
-// //        elements[i].style.display = elements[i].style.display === "none" ? "" : "none";
-// //    }
-// //}
-
-// // Registration
-
-// // Registration Ends
+}
+// User details ends

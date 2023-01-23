@@ -12,3 +12,33 @@
 .cover-container .social {
     margin: 5px;
 }
+
+/* footer */
+
+/* header */
+.user-header a:hover {
+    border-bottom: solid white;
+    font-weight: bold;
+}
+
+/* task container colors */
+.open {
+    background-color: #007bff;
+}
+
+.testing {
+    background-color: #ffc107;
+}
+
+.complete {
+    background-color: #28a745;
+}
+
+/* Create or edit project/task */
+
+/* .new-task-form-container,
+.edit-task-form-container,
+.new-project-form-container,
+.edit-project-form-container {
+    background-color: coral;
+} */
