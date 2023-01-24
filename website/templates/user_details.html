@@ -41,6 +41,35 @@
     </header>
     <hr class="text-white">
 
+    <div class="row mt-2 mb-2">
+        <div class="col-md-4 offset-md-4">
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+            <div class="alert alert-success text-center">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div class="col-md-4 offset-md-4">
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+            <div class="alert alert-danger text-center">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
     <div class="container border border-warning text-white rounded">
         <div class="container">
             <form method="post" action="{{ url_for('views.update_user_details') }}" class="mt-2 mb-2">

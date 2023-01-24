@@ -54,14 +54,14 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-2 mb-2">
         <div class="col-md-4 offset-md-4">
             {% with messages = get_flashed_messages(category_filter=["success"]) %}
             {% if messages %}
-            <div class="alert alert-success">
+            <div class="alert alert-success text-center">
                 <ul class="mb-0">
                     {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <p>{{ message }}</p>
                     {% endfor %}
                 </ul>
             </div>
@@ -71,10 +71,10 @@
         <div class="col-md-4 offset-md-4">
             {% with messages = get_flashed_messages(category_filter=["error"]) %}
             {% if messages %}
-            <div class="alert alert-danger">
+            <div class="alert alert-danger text-center">
                 <ul class="mb-0">
                     {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <p>{{ message }}</p>
                     {% endfor %}
                 </ul>
             </div>

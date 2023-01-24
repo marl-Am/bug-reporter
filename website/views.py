@@ -1,4 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user
 
 views = Blueprint('views', __name__)
 
@@ -10,7 +11,7 @@ def base():
 @views.route('/user')
 # @login_required
 def user():
-    return render_template('user_dashboard.html')
+    return render_template('user_dashboard.html', user=current_user)
 
 
 @views.route('/edit_project', methods=['GET', 'POST'])
@@ -22,7 +23,7 @@ def edit_project():
             print("Error editing project...")
         else:
             flash('Editing project successful')
-            return redirect(url_for('user'))
+            return redirect(url_for('views.user'))
     return render_template('edit_project.html')
 
 
@@ -35,7 +36,7 @@ def delete_project():
             print("Error deleting project...")
         else:
             flash('Deleting project successful')
-            return redirect(url_for('user'))
+            return redirect(url_for('views.user'))
 
 
 @views.route('/new_project', methods=['GET', 'POST'])
@@ -46,7 +47,7 @@ def new_project():
             print("Error making new project...")
         else:
             flash('New project made successfully')
-            return redirect(url_for('user'))
+            return redirect(url_for('views.user'))
     return render_template('new_project.html')
 
 
@@ -65,7 +66,7 @@ def new_task():
             print("Error editing task...")
         else:
             flash('Editing task successful')
-            return redirect(url_for('user'))
+            return redirect(url_for('views.user'))
     return render_template('new_task.html')
 
 
@@ -84,7 +85,7 @@ def update_user_details():
         print("Error updating user details...")
     else:
         flash('Updated user details successfully')
-        return redirect(url_for('user_details'))
+        return redirect(url_for('views.user_details'))
 
 
 @views.route('/project_details', methods=['GET', 'POST'])
@@ -95,5 +96,5 @@ def project_details():
             print("Error updating project details...")
         else:
             flash('Updated project details successfully')
-            return redirect(url_for('project_details'))
+            return redirect(url_for('views.project_details'))
     return render_template('project_details.html')

@@ -27,7 +27,8 @@
 
                 <ul class="user-header nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{{ url_for('views.user') }}" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project Details</a>
+                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project
+                            Details</a>
                     </li>
                     <li><a href="{{ url_for('views.user_details') }}" class="nav-link px-2 text-white">Account</a></li>
                 </ul>
@@ -39,6 +40,35 @@
         </div>
     </header>
     <hr class="text-white">
+
+    <div class="row mt-2 mb-2">
+        <div class="col-md-4 offset-md-4">
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+            <div class="alert alert-success text-center">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div class="col-md-4 offset-md-4">
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+            <div class="alert alert-danger text-center">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
 
     <div class="container project-container">
 

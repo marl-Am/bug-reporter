@@ -18,14 +18,14 @@ def register():
 
         user = User.query.filter_by(email=email).first()
         if user:
-            flash('Email already exists.', category='error')
+            flash('Account already exists.', category='error')
         else:
             new_user = User(email=email, password=generate_password_hash(password, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('login'))
+            return redirect(url_for('views.user'))
     return render_template('register.html')
 
 
@@ -44,7 +44,7 @@ def login():
             else:
                 flash('Incorrect password.', category='error')
         else:
-            flash('Email does not exist.', category='error')
+            flash('Account does not exist.', category='error')
 
     return render_template('login.html')
 
@@ -53,4 +53,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('auth.login'))
