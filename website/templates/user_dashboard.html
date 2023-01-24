@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/img/favicon.ico" />
+    <link rel="stylesheet" href="/static/css/app.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+    <!-- <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" /> -->
+    <title>Dashboard</title>
+</head>
+
+<body class="bg-dark">
+
+    <header class="p-3 text-bg-dark">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+
+                <ul class="user-header nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="{{ url_for('views.user') }}" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project Details</a>
+                    </li>
+                    <li><a href="{{ url_for('views.user_details') }}" class="nav-link px-2 text-white">Account</a></li>
+                </ul>
+
+                <div class="text-end">
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-warning">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <hr class="text-white">
+
+    <div class="filter-tasks text-center">
+        <h4 class="text-white mt-2 mb-2">My Projects</h4>
+        <div class="">
+            <a href="{{ url_for('views.new_project') }}" class="btn btn-outline-warning">Create Project</a>
+            <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-warning">Edit Project</a>
+            <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-warning">Create Task</a>
+            <a href="{{ url_for('views.edit_task') }}" class="btn btn-outline-warning">Edit Task</a>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="accordion mt-2 mb-2" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Project 1
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-dark mt-2">Add Task</a>
+                    <div class="accordion-body">
+                        <div class="project-container">
+                            <div class="album py-5 bg-light">
+                                <div class="container">
+                                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                                        <div class="col">
+                                            <div class="card shadow-sm">
+                                                <div class="card-header d-flex justify-content-between">
+                                                    <span class="task-title text-center text-black">Task 1</span>
+                                                    <div class="d-flex justify-content-end">
+                                                        <a class="btn btn-outline-dark mr-2 edit-btn"> <i
+                                                                class="bi bi-pencil-fill"></i> Edit</a>
+                                                        <a class="btn btn-danger"> <i class="bi bi-pencil-fill"></i>
+                                                            Delete</a>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="card-body">
+                                                    <p class="task-content card-text">Task 1 Content</p>
+
+                                                    <div class="d-flex justify-content-between align-items-center">
+
+                                                        <small class="task-status text-muted">OPEN</small>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="task-created-on card-footer bg-dark text-white">Created On
+                                                </div>
+                                                <div class="task-updated-on card-footer bg-dark text-white">Updated On
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

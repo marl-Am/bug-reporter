@@ -7,12 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/static/img/favicon.ico" />
     <link rel="stylesheet" href="/static/css/app.css" />
+    <script src="/static/js/app.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-    <title>Project Details </title>
+    <title>User Details </title>
 </head>
 
 <body class="bg-dark">
@@ -26,10 +27,10 @@
                 </a>
 
                 <ul class="user-header nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="{{ url_for('user') }}" class="nav-link px-2 text-white">User</a></li>
-                    <li><a href="{{ url_for('project_details') }}" class="nav-link px-2 text-white">Project Details</a>
+                    <li><a href="{{ url_for('views.user') }}" class="nav-link px-2 text-white">Home</a></li>
+                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project Details</a>
                     </li>
-                    <li><a href="{{ url_for('user_details') }}" class="nav-link px-2 text-white">Account</a></li>
+                    <li><a href="{{ url_for('views.user_details') }}" class="nav-link px-2 text-white">Account</a></li>
                 </ul>
 
                 <div class="text-end">
@@ -39,6 +40,31 @@
         </div>
     </header>
     <hr class="text-white">
+
+    <div class="container border border-warning text-white rounded">
+        <div class="container">
+            <form method="post" action="{{ url_for('views.update_user_details') }}" class="mt-2 mb-2">
+                <div class="form-group mt-2 mb-2">
+                    <label for="email">Update Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+
+                <div class="form-group mt-4 mb-2">
+                    <label for="password">New Password</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                    <span class="do-passwords-match"></span>
+                </div>
+
+                <div class="form-group mt-4 mb-2">
+                    <label for="retype-password">Retype Password</label>
+                    <input type="password" class="form-control" id="retype-password" name="retype-password" required>
+                    <span class="do-passwords-match"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-4 mb-2">Update</button>
+            </form>
+        </div>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"

@@ -34,6 +34,24 @@
     background-color: #28a745;
 }
 
+/* Project container */
+/* .project-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.card {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.edit-btn {
+    margin-right: 2px;
+}
+
+/* Project container ends */
+
 /* Create or edit project/task */
 
 /* .new-task-form-container,

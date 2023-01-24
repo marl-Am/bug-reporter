@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "database": "BUG_REPORTER_DB",
+            "username": "postgres",
+            "name": "Postgres Local",
+            "password": "mysql"
+        }
+    ]
+}
