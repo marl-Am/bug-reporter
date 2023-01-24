@@ -7,11 +7,9 @@ def base():
     return render_template('index.html')
 
 
-@views.route('/user', methods=['GET', 'POST'])
+@views.route('/user')
 # @login_required
 def user():
-    if request.method == 'POST':
-        print("User...")
     return render_template('user_dashboard.html')
 
 

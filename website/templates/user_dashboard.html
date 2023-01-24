@@ -30,7 +30,8 @@
 
                 <ul class="user-header nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{{ url_for('views.user') }}" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project Details</a>
+                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project
+                            Details</a>
                     </li>
                     <li><a href="{{ url_for('views.user_details') }}" class="nav-link px-2 text-white">Account</a></li>
                 </ul>
@@ -46,10 +47,39 @@
     <div class="filter-tasks text-center">
         <h4 class="text-white mt-2 mb-2">My Projects</h4>
         <div class="">
-            <a href="{{ url_for('views.new_project') }}" class="btn btn-outline-warning">Create Project</a>
+            <a href="{{ url_for('views.new_project') }}" class="btn btn-outline-warning">New Project</a>
             <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-warning">Edit Project</a>
-            <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-warning">Create Task</a>
+            <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-warning">New Task</a>
             <a href="{{ url_for('views.edit_task') }}" class="btn btn-outline-warning">Edit Task</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+            <div class="alert alert-success">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div class="col-md-4 offset-md-4">
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% endwith %}
         </div>
     </div>
 
@@ -65,7 +95,7 @@
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample">
-                    <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-dark mt-2">Add Task</a>
+                    <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-dark mt-2">New Task</a>
                     <div class="accordion-body">
                         <div class="project-container">
                             <div class="album py-5 bg-light">
