@@ -25,7 +25,7 @@ def register():
             db.session.commit()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
-            return redirect(url_for('views.user'))
+            return redirect(url_for('views.user_dashboard'))
     return render_template('register.html')
 
 
@@ -40,7 +40,7 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.user'))
+                return redirect(url_for('views.user_dashboard'))
             else:
                 flash('Incorrect password.', category='error')
         else:
@@ -53,4 +53,5 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('Logged out.', category='success')
     return redirect(url_for('auth.login'))

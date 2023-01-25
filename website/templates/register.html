@@ -18,22 +18,19 @@
 <body class="bg-dark">
     <div class="container">
         <h3 class="text-white text-center">Register</h3>
-
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-                {% with messages = get_flashed_messages(category_filter=["error"]) %}
-                {% if messages %}
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        {% for message in messages %}
-                        <p>{{ message }}</p>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
-                {% endwith %}
-            </div>
+        
+        {% with messages = get_flashed_messages(category_filter=["error"]) %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
 
 
         <div class="row">
