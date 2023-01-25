@@ -39,6 +39,7 @@
                 <div class="text-end">
                     <a href="{{ url_for('auth.logout') }}" class="btn btn-warning">Logout</a>
                 </div>
+
             </div>
         </div>
     </header>
@@ -83,10 +84,113 @@
         </div>
     </div>
 
+    <div class="container project-container">
 
-    <div class="container">
+        <div class="row parent d-flex justify-content-center align-items-center">
+
+            {% for project in projects %}
+            <div class="card mt-2 mb-2" style="width: 18rem;">
+                <div class="card-body ms-2 me-2">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.content }}</p>
+                    <form method="post" action="{{url_for('views.edit_project')}}">
+                        <input type="hidden" name="project_id" value="{{project.id}}">
+                        <button type="submit" class="btn btn-outline-info">Edit</button>
+                    </form>
+                    <form method="post" action="{{url_for('views.delete_project')}}">
+                        <input type="hidden" name="project_id" value="{{project.id}}">
+                        <button type="submit" class="btn btn-outline-danger">Delete</button>
+                    </form>
+                    <footer class="card-text">{{ project.status }}</footer>
+                    <footer class="card-text">{{ project.created_on }}</footer>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- {% for project in projects %}
+                    <div class="card mt-2 mb-2" style="width: 18rem;">
+                        <div class="card-body ms-2 me-2">
+                            <h5 class="card-title" id="{{ project.status }}">Title: {{ project.title }}</h5>
+                            <p class="card-text">{{ project.content }}</p>
+                            <footer class="card-text">Status: {{ project.status }}<br> Created: {{ project.created_on }}</footer>
+                            
+                            <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">
+                                <input type="hidden" name="project_id" value="{{ project.id }}"> Edit</a>
+        
+        
+                            <form action="{{ url_for('views.delete_project') }}" method="POST">
+                                <input type="hidden" name="project_id" value="{{ project.id }}">
+                                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %} -->
+
+        </div>
+
+        <!-- <div class="row parent d-flex justify-content-center align-items-center">
+        
+                    <div class="card mt-2 mb-2" style="width: 18rem;">
+                        <div class="card-body ms-2 me-2">
+                            <h5 class="card-title">Project Title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                the
+                                card's
+                                content.</p>
+                            <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
+                            <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+        
+                    <div class="card mt-2 mb-2" style="width: 18rem;">
+                        <div class="card-body ms-2 me-2">
+                            <h5 class="card-title">Project Title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                the
+                                card's
+                                content.</p>
+                            <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
+                            <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+        
+                    <div class="card mt-2 mb-2" style="width: 18rem;">
+                        <div class="card-body ms-2 me-2">
+                            <h5 class="card-title">Project Title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                the
+                                card's
+                                content.</p>
+                            <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
+                            <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
+                        </div>
+                    </div>
+        
+                </div> -->
+
+    </div>
+
+    <!-- <div class="container">
+
+        {% for project in projects %}
+        <div class="project-card text-white">
+            <h5 class="card-title">Title: {{ project.title }}</h5>
+            <p class="card-text">{{ project.content }}</p>
+            <form action="{{ url_for('views.delete_project') }}" method="POST">
+                <input type="hidden" name="project_id" value="{{ project.id }}">
+                <button>Delete</button>
+            </form>
+            <footer class="card-text">Status: {{ project.status }}</footer>
+            <footer class="card-text">Created: {{ project.created_on }}</footer>
+        </div>
+        {% endfor %}
+
+    </div> -->
+
+
+    <!-- <div class="container">
         <div class="accordion mt-2 mb-2" id="accordionExample">
-            <div class="accordion-item">
+            <div class="accordion-item mt-2 mb-2">
                 <h2 class="accordion-header" id="headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -97,41 +201,30 @@
                     data-bs-parent="#accordionExample">
                     <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-dark mt-2">New Task</a>
                     <div class="accordion-body">
-                        <div class="project-container">
-                            <div class="album py-5 bg-light">
-                                <div class="container">
-                                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                                        <div class="col">
-                                            <div class="card shadow-sm">
-                                                <div class="card-header d-flex justify-content-between">
-                                                    <span class="task-title text-center text-black">Task 1</span>
-                                                    <div class="d-flex justify-content-end">
-                                                        <a class="btn btn-outline-dark mr-2 edit-btn"> <i
-                                                                class="bi bi-pencil-fill"></i> Edit</a>
-                                                        <a class="btn btn-danger"> <i class="bi bi-pencil-fill"></i>
-                                                            Delete</a>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="card-body">
-                                                    <p class="task-content card-text">Task 1 Content</p>
-
-                                                    <div class="d-flex justify-content-between align-items-center">
-
-                                                        <small class="task-status text-muted">OPEN</small>
-
-                                                    </div>
-
-                                                </div>
-                                                <div class="task-created-on card-footer bg-dark text-white">Created On
-                                                </div>
-                                                <div class="task-updated-on card-footer bg-dark text-white">Updated On
-                                                </div>
-                                            </div>
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <span class="task-title text-center text-black">Task 1</span>
+                                        <div class="d-flex justify-content-end">
+                                            <a class="btn btn-outline-dark mr-2 edit-btn"> <i
+                                                    class="bi bi-pencil-fill"></i> Edit</a>
+                                            <a class="btn btn-danger"> <i class="bi bi-pencil-fill"></i>
+                                                Delete</a>
                                         </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="task-content card-text">Task 1 Content</p>
+                                        <div class="d-flex justify-content-between align-items-center">
 
+                                            <small class="task-status text-muted">OPEN</small>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="task-created-on card-footer bg-dark text-white">Created On
+                                    </div>
+                                    <div class="task-updated-on card-footer bg-dark text-white">Updated On
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +233,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 

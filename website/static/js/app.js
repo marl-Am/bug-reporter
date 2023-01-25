@@ -7,8 +7,33 @@ function filterTasks(status) {
     else { }
 }
 
-// User details
+function deleteProject(projectId) {
+    fetch("/delete_project", {
+        method: "POST",
+        body: JSON.stringify({ projectId: projectId }),
+    }).then((_res) => {
+        window.location.href = "/";
+    });
+}
+
+function deleteTask(taskId) {
+    fetch("/delete_task", {
+        method: "POST",
+        body: JSON.stringify({ taskId: taskId }),
+    }).then((_res) => {
+        window.location.href = "/";
+    });
+}
+
+// $(document).ready(function () {
+//     setTimeout(function () {
+//         $('.alert').fadeOut('fast');
+//     }, 3000);
+// });
+
 window.onload = function () {
+
+
     // Get references to the password inputs and the submit button
     const passwordInput = document.getElementById("password");
     const retypePasswordInput = document.getElementById("retype-password");
@@ -39,6 +64,4 @@ window.onload = function () {
             submitButton.disabled = true;
         }
     }
-
 }
-// User details ends

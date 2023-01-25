@@ -28,18 +28,21 @@
 
                 <ul class="user-header nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{{ url_for('views.user') }}" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project Details</a>
+                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project
+                            Details</a>
                     </li>
                     <li><a href="{{ url_for('views.user_details') }}" class="nav-link px-2 text-white">Account</a></li>
                 </ul>
 
                 <div class="text-end">
-                    <button type="button" class="btn btn-warning">Logout</button>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-warning">Logout</a>
                 </div>
             </div>
         </div>
     </header>
     <hr class="text-white">
+
+    <p class="text-white text-center">Welcome, <span class="text-success">{{current_user.email}}</span></p>
 
     <div class="row mt-2 mb-2">
         <div class="col-md-4 offset-md-4">

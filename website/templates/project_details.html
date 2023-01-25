@@ -34,7 +34,7 @@
                 </ul>
 
                 <div class="text-end">
-                    <button type="button" class="btn btn-warning">Logout</button>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-warning">Logout</a>
                 </div>
             </div>
         </div>
@@ -70,89 +70,22 @@
         </div>
     </div>
 
-    <div class="container project-container">
-
-        <div class="row parent d-flex justify-content-center align-items-center">
-
-            <div class="card mt-2 mb-2" style="width: 18rem;">
-                <div class="card-body ms-2 me-2">
-                    <h5 class="card-title">Project Title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's
-                        content.</p>
-                    <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
-                    <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
-                </div>
+    <!-- <div class="container">
+        
+            {% for project in projects %}
+            <div class="project-card text-white">
+                <h5 class="card-title" id="{{ project.status }}">Title: {{ project.title }}</h5>
+                <p class="card-text">{{ project.content }}</p>
+                <form action="{{ url_for('views.delete_project') }}" method="POST">
+                    <input type="hidden" name="project_id" value="{{ project.id }}">
+                    <button>Delete</button>
+                </form>
+                <footer class="card-text">Status: {{ project.status }}</footer>
+                <footer class="card-text">Created: {{ project.created_on }}</footer>
             </div>
-
-            <div class="card mt-2 mb-2" style="width: 18rem;">
-                <div class="card-body ms-2 me-2">
-                    <h5 class="card-title">Project Title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's
-                        content.</p>
-                    <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
-                    <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
-                </div>
-            </div>
-
-            <div class="card mt-2 mb-2" style="width: 18rem;">
-                <div class="card-body ms-2 me-2">
-                    <h5 class="card-title">Project Title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's
-                        content.</p>
-                    <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
-                    <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row parent d-flex justify-content-center align-items-center">
-
-            <div class="card mt-2 mb-2" style="width: 18rem;">
-                <div class="card-body ms-2 me-2">
-                    <h5 class="card-title">Project Title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's
-                        content.</p>
-                    <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
-                    <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
-                </div>
-            </div>
-
-            <div class="card mt-2 mb-2" style="width: 18rem;">
-                <div class="card-body ms-2 me-2">
-                    <h5 class="card-title">Project Title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's
-                        content.</p>
-                    <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
-                    <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
-                </div>
-            </div>
-
-            <div class="card mt-2 mb-2" style="width: 18rem;">
-                <div class="card-body ms-2 me-2">
-                    <h5 class="card-title">Project Title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's
-                        content.</p>
-                    <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-info">Edit</a>
-                    <a href="{{ url_for('views.delete_project') }}" class="btn btn-outline-danger">Delete</a>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
+            {% endfor %}
+        
+        </div> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
