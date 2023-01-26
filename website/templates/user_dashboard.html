@@ -22,17 +22,9 @@
     <header class="p-3 text-bg-dark">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                </a>
 
                 <ul class="user-header nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="{{ url_for('views.user_dashboard') }}" class="nav-link px-2 text-white">Home</a></li>
-                    <li><a href="{{ url_for('views.project_details') }}" class="nav-link px-2 text-white">Project
-                            Details</a>
-                    </li>
                     <li><a href="{{ url_for('views.user_details') }}" class="nav-link px-2 text-white">Account</a></li>
                 </ul>
 
@@ -49,38 +41,33 @@
         <h4 class="text-white mt-2 mb-2">My Projects</h4>
         <div class="">
             <a href="{{ url_for('views.new_project') }}" class="btn btn-outline-warning">New Project</a>
-            <a href="{{ url_for('views.edit_project') }}" class="btn btn-outline-warning">Edit Project</a>
-            <a href="{{ url_for('views.new_task') }}" class="btn btn-outline-warning">New Task</a>
-            <a href="{{ url_for('views.edit_task') }}" class="btn btn-outline-warning">Edit Task</a>
         </div>
     </div>
 
+    <div class="container">
         {% with messages = get_flashed_messages(category_filter=["success"]) %}
         {% if messages %}
         {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <div class="alert alert-success alert-dismissible fade show text-center mt-2 mb-2" role="alert">
             {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endfor %}
         {% endif %}
         {% endwith %}
-        
-        
+
+
         {% with messages = get_flashed_messages(category_filter=["error"]) %}
         {% if messages %}
         {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        <div class="alert alert-success alert-dismissible fade show text-center mt-2 mb-2" role="alert">
             {{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% endfor %}
         {% endif %}
         {% endwith %}
+    </div>
 
     <div class="container project-container">
 
@@ -92,10 +79,10 @@
                     <h5 class="card-header text-center mb-2" id="{{ project.status }}">{{ project.status }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Title: {{ project.title }}</h6>
                     <p class="card-text">{{ project.content }}</p>
-                    <!-- <p class="card-text" id="{{ project.status }}">{{ project.status }}</p> -->
                     <p class="card-text">{{ project.created_on }}</p>
                     <div>
-                        <a class="btn btn-dark d-inline-block btn-sm" href="#">View</a>
+                        <a class="btn btn-dark d-inline-block btn-sm"
+                            href="{{ url_for('views.view_project', project_id=project.id) }}">View</a>
                         <form method="get" action="{{url_for('views.edit_project')}}" class="d-inline-block">
                             <input type="hidden" name="project_id" value="{{project.id}}">
                             <button type="submit" class="btn btn-info btn-sm">Edit</button>

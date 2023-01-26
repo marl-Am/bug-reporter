@@ -1,8 +1,9 @@
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for, jsonify
 from flask_login import current_user, login_required
 import json
+from werkzeug.security import generate_password_hash
 
-from website.models import Project, Task
+from website.models import Project, Task, User
 
 from . import db
 
@@ -56,7 +57,6 @@ def edit_project():
         if not project:
             flash('(GET) Project not found.', 'error')
             return redirect(url_for('views.user_dashboard'))
-        print(f'GET project_id = {project_id}')
         return render_template('edit_project.html', project=project)
 
     if request.method == 'POST':
@@ -91,7 +91,7 @@ def delete_project():
     project = Project.query.filter_by(id=project_id).first()
     db.session.delete(project)
     db.session.commit()
-    flash("Project deleted.")
+    flash('Project deleted.', 'success')
     return redirect(url_for('views.user_dashboard'))
 
 
@@ -101,8 +101,7 @@ def new_project():
     if request.method == 'POST':
         title = request.form.get("title")
         content = request.form.get("content")
-        new_project = Project(user_id=current_user.id,
-                              title=title, content=content, status="Open")
+        new_project = Project(user_id=current_user.id, title=title, content=content, status="Open")
         if not new_project:
             flash('Project not created.', 'error')
         else:
@@ -113,86 +112,172 @@ def new_project():
     return render_template('new_project.html')
 
 
+@views.route('/view_project/<int:project_id>')
+def view_project(project_id):
+    project = Project.query.filter_by(id=project_id).first()
+    tasks = Task.query.filter_by(project_id=project_id).all()
+    return render_template('view_project.html', project=project, tasks=tasks)
+
+
+# @views.route('/delete_task', methods=["POST"])
+# @login_required
+# def delete_task(project_id):
+#     project_id = request.form.get("project_id")
+#     project = Project.query.filter_by(id=project_id).first()
+#     task = Task.query.filter_by(project_id=project.id).first()
+#     db.session.delete(task)
+#     db.session.commit()
+#     flash('Task deleted.', 'success')
+#     return redirect(url_for('views.view_project', project_id=project_id))
+
 @views.route('/delete_task', methods=["POST"])
 @login_required
 def delete_task():
-    task = json.loads(request.data)
-    taskId = task['taskId']
-    task = Task.query.get(taskId)
-    if task:
-        if task.project_id == current_user.id:
-            db.session.delete(task)
-            db.session.commit()
-    return jsonify({})
+    task_id = request.form.get("task_id")
+    task = Task.query.filter_by(id=task_id).first()
+    project_id = task.project_id
+    db.session.delete(task)
+    db.session.commit()
+    flash('Task deleted.', 'success')
+    return redirect(url_for('views.view_project', project_id=project_id))
 
 
-@views.route('/edit_task', methods=['GET', 'POST'])
+# @views.route('/delete_task', methods=["POST"])
+# @login_required
+# def delete_task():
+#     task_id = request.form.get("task_id")
+#     task = Task.query.filter_by(id=task_id).first()
+#     db.session.delete(task)
+#     db.session.commit()
+#     flash('Task deleted.', 'success')
+#     return redirect(url_for('views.view_project'))
+
+
+
+# @views.route('/edit_task', methods=['GET', 'POST'])
+# @login_required
+# def edit_task():
+#     if request.method == 'POST':
+#         # Get the form data
+#         task_id = request.form.get("task_id")
+#         title = request.form.get("title")
+#         content = request.form.get("content")
+#         status = request.form.get("status")
+
+#         project = Project.query.filter_by(user_id=current_user.id).first()
+#         project_id = project.id
+#         if not project:
+#             flash('Project not found.', 'error')
+#             return redirect(url_for('views.view_project', project_id=project_id))
+
+#         task = Task.query.filter_by(id=task_id).first()
+#         if not task:
+#             flash('Task not found.', 'error')
+#             return redirect(url_for('views.view_project', project_id=project_id))
+
+#         # Update the Task's details
+#         task.title = title
+#         task.content = content
+#         task.status = status
+#         db.session.commit()
+
+#         flash('Task updated successfully.', 'success')
+#         return redirect(url_for('views.view_project', project_id=project_id))
+#     return render_template('edit_task.html')
+
+@views.route('/edit_task', methods=["GET", "POST"])
 @login_required
 def edit_task():
-    if request.method == 'POST':
-        # Get the form data
+    if request.method == 'GET':
+        task_id = request.args.get("task_id")
+        task = Task.query.filter_by(id=task_id).first()
+        if not task:
+            project = Project.query.filter_by(user_id=current_user.id).first()
+            project_id = project.id
+            flash('(GET) Task not found.', 'error')
+            return redirect(url_for('views.view_project', project_id=project_id))
+        return render_template('edit_task.html', task=task)
+
+    if request.method == "POST":
+        task_id = request.form.get("task_id")
+        task = Task.query.filter_by(id=task_id).first()
+        if not task:
+            project = Project.query.filter_by(user_id=current_user.id).first()
+            project_id = project.id
+            flash('(POST) Task not found.', 'error')
+            return redirect(url_for('views.view_project', project_id=project_id))
+
         title = request.form.get("title")
         content = request.form.get("content")
+        status = request.form.get("status")
 
-        # Update the Task's details
-        current_user.title = title
-        current_user.content = content
+        task.title = title
+        task.content = content
+        task.status = status
         db.session.commit()
+        flash('Task updated.', 'success')
+        return redirect(url_for('views.view_project', project_id=task.project_id))
 
-        flash("Task details updated successfully.")
-        return redirect(url_for('views.user_dashboard'))
-    return render_template('edit_task.html')
 
 
 @views.route('/new_task', methods=['GET', 'POST'])
 @login_required
 def new_task():
+    if request.method == 'GET':
+        return render_template('new_task.html')
     if request.method == 'POST':
         title = request.form.get("title")
         content = request.form.get("content")
-        new_task = Task(project_id=current_user.id, title=title,
-                        content=content, status="Open")
-        if not new_task:
-            flash('Task not created.', 'error')
-        else:
-            db.session.add(new_task)
-            db.session.commit()
-            flash('Task created successfully.', 'success')
-            return redirect(url_for('views.user_dashboard'))
-    return render_template('new_task.html')
 
+        project = Project.query.filter_by(user_id=current_user.id).first()
+        project_id = project.id
+        if not project:
+            flash('Project id not found.', 'error')
+            return redirect(url_for('views.view_project', project_id=project_id))
 
-@views.route('/view_tasks', methods=['GET', 'POST'])
-@login_required
-def view_tasks():
-    if request.method == 'GET':
-        return render_template('view_tasks.html')
-    if request.method == 'POST':
-        print("Posting tasks...")
+        task = Task(project_id=project.id, title=title,
+                    content=content, status="Open")
+        if not task:
+            flash('Task creation failed.', 'error')
+            return redirect(url_for('views.view_project', project_id=project_id))
+
+        db.session.add(task)
+        db.session.commit()
+        flash('Task creation successful.', 'success')
+        return redirect(url_for('views.view_project', project_id=project_id))
 
 
 @views.route('/user_details', methods=['GET'])
 @login_required
 def user_details():
-    return render_template('user_details.html')
+    return render_template('user_details.html', user=current_user)
 
 
-@views.route("/update_user_details", methods=["POST"])
+@views.route("/update_user_details", methods=['POST'])
 @login_required
 def update_user_details():
-    if request.method == "POST":
+    if request.method == 'POST':
         # Get the form data
         email = request.form.get("email")
         password = request.form.get("password")
 
-        # Update the User's details
+        # Retrieve the current user object
+        from flask_login import current_user
+
+        if not current_user:
+            flash('Update details failed.', 'error')
+            return redirect(url_for('views.user_details'))
+
+        # Update the email and password fields
         current_user.email = email
-        current_user.password = password
+        current_user.password = generate_password_hash(
+            password, method='sha256')
+
+        # Commit the changes to the database
         db.session.commit()
 
-        flash("User details updated successfully.")
-        return redirect(url_for('views.update_user_details'))
-    return redirect(url_for("views.dashboard"))
+        flash('User updated.', 'success')
+        return redirect(url_for('views.user_details'))
 
 
 @views.route('/project_details', methods=['GET', 'POST'])
