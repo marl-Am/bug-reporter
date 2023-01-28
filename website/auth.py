@@ -18,6 +18,9 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
         retype_password = request.form.get('retype_password')
+        if ( (len(email) < 7 or len(email) > 30) or (len(password) < 7 or len(password) > 30) ):
+            flash('Input should be between 7 and 30 characters.', category = 'error')
+            return redirect(url_for('views.user_dashboard'))
 
         user = User.query.filter_by(email=email).first()
         if user:

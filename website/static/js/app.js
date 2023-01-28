@@ -16,6 +16,7 @@ window.onload = function () {
         const password = passwordInput.value;
         const retypePassword = retypePasswordInput.value;
         const matchMessages = document.querySelectorAll(".do-passwords-match");
+
         if (password === retypePassword) {
             matchMessages.forEach(matchMessage => {
                 matchMessage.textContent = "Passwords match";
