@@ -11,6 +11,9 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        flash('You are already registered.', 'success')
+        return redirect(url_for('views.user_dashboard'))
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
@@ -32,6 +35,9 @@ def register():
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        flash('You are already logged in.', 'success')
+        return redirect(url_for('views.user_dashboard'))
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
