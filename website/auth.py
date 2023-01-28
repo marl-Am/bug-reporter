@@ -1,9 +1,9 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from website.models import User
+from website.models import Project, Task, User
 from . import db
 
 auth = Blueprint('auth', __name__)
@@ -20,7 +20,8 @@ def register():
         if user:
             flash('Account already exists.', category='error')
         else:
-            new_user = User(email=email, password=generate_password_hash(password, method='sha256'))
+            new_user = User(email=email, password=generate_password_hash(
+                password, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
@@ -55,3 +56,26 @@ def logout():
     logout_user()
     flash('Logged out.', category='success')
     return redirect(url_for('auth.login'))
+
+
+@auth.route('/delete_account/<int:id>', methods=['POST'])
+@login_required
+def delete_account(id):
+    if id == current_user.id:
+        user_to_delete = User.query.filter_by(id=current_user.id).first()
+        projects_to_delete = Project.query.filter_by(user_id=current_user.id)
+        tasks_to_delete = Task.query.filter_by(project_id=current_user.id)
+
+        for task_to_delete in tasks_to_delete:
+            db.session.delete(task_to_delete)
+        for project_to_delete in projects_to_delete:
+            db.session.delete(project_to_delete)
+        db.session.delete(user_to_delete)
+        db.session.commit()
+
+        logout_user()
+        flash('Account deleted.', 'success')
+        return redirect(url_for('auth.login'))
+    else:
+        flash('Sorry, you can not delete that user!', 'error')
+        return redirect(url_for('views.user_details'))

@@ -1,36 +1,4 @@
 
-// filter tasks
-function filterTasks(status) {
-    if (status === 'All') { }
-    else if (status === 'open') { }
-    else if (status === 'testing') { }
-    else { }
-}
-
-function deleteProject(projectId) {
-    fetch("/delete_project", {
-        method: "POST",
-        body: JSON.stringify({ projectId: projectId }),
-    }).then((_res) => {
-        window.location.href = "/";
-    });
-}
-
-function deleteTask(taskId) {
-    fetch("/delete_task", {
-        method: "POST",
-        body: JSON.stringify({ taskId: taskId }),
-    }).then((_res) => {
-        window.location.href = "/";
-    });
-}
-
-// $(document).ready(function () {
-//     setTimeout(function () {
-//         $('.alert').fadeOut('fast');
-//     }, 3000);
-// });
-
 window.onload = function () {
 
 

@@ -58,19 +58,7 @@
     margin-right: 2px;
 }
 
-/* Header */
-/* .text-end {
-    margin-left: 2px;
-    margin-right: 2px;
-} */
-
-/* Project container ends */
-
-/* Create or edit project/task */
-
-/* .new-task-form-container,
-.edit-task-form-container,
-.new-project-form-container,
-.edit-project-form-container {
-    background-color: coral;
-} */
+.delete .text-end form,
+.delete .text-end a {
+    display: inline-block;
+}

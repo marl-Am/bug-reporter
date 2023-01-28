@@ -1,6 +1,5 @@
-from flask import Blueprint, flash, jsonify, redirect, render_template, request, url_for, jsonify
+from flask import Blueprint, flash, redirect, render_template, request, url_for, jsonify
 from flask_login import current_user, login_required
-import json
 from werkzeug.security import generate_password_hash
 
 from website.models import Project, Task, User
@@ -15,38 +14,13 @@ def base():
     return render_template('index.html')
 
 
-@views.route('/user_dashboard')
+@views.route('/user_dashboard/')
 @login_required
 def user_dashboard():
     projects = db.session.query(Project).filter_by(
         user_id=current_user.id).all()
     return render_template('user_dashboard.html', user=current_user, projects=projects)
 
-
-# @views.route('/edit_project', methods=['GET', 'POST'])
-# @login_required
-# def edit_project():
-#     project_id = request.args.get("project_id")
-#     project = Project.query.filter_by(id=project_id).first()
-#     if request.method == 'POST':
-#         if not project:
-#             flash('Project not found.', 'error')
-#             return redirect(url_for('views.user_dashboard'))
-#         else:
-#             # Get the form data
-#             title = request.form.get("title")
-#             content = request.form.get("content")
-#             status = request.form.get("status")
-#             # Update the fields of the project
-#             project.title = title
-#             project.content = content
-#             project.status = status
-#             # Save the changes to the database
-#             db.session.commit()
-#             flash('Project details updated successfully.', 'success')
-#             return redirect(url_for('views.user_dashboard'))
-#     if request.method == 'GET':
-#         return render_template('edit_project.html', project=project)
 
 @views.route('/edit_project', methods=['GET', 'POST'])
 @login_required
@@ -88,8 +62,12 @@ def edit_project():
 @login_required
 def delete_project():
     project_id = request.form.get("project_id")
-    project = Project.query.filter_by(id=project_id).first()
-    db.session.delete(project)
+    project_to_delete = Project.query.filter_by(id=project_id).first()
+    tasks_to_delete = Task.query.filter_by(project_id=project_id).all()
+    for task in tasks_to_delete:
+        db.session.delete(task)
+
+    db.session.delete(project_to_delete)
     db.session.commit()
     flash('Project deleted.', 'success')
     return redirect(url_for('views.user_dashboard'))
@@ -101,7 +79,8 @@ def new_project():
     if request.method == 'POST':
         title = request.form.get("title")
         content = request.form.get("content")
-        new_project = Project(user_id=current_user.id, title=title, content=content, status="Open")
+        new_project = Project(user_id=current_user.id,
+                              title=title, content=content, status="Open")
         if not new_project:
             flash('Project not created.', 'error')
         else:
@@ -119,17 +98,6 @@ def view_project(project_id):
     return render_template('view_project.html', project=project, tasks=tasks)
 
 
-# @views.route('/delete_task', methods=["POST"])
-# @login_required
-# def delete_task(project_id):
-#     project_id = request.form.get("project_id")
-#     project = Project.query.filter_by(id=project_id).first()
-#     task = Task.query.filter_by(project_id=project.id).first()
-#     db.session.delete(task)
-#     db.session.commit()
-#     flash('Task deleted.', 'success')
-#     return redirect(url_for('views.view_project', project_id=project_id))
-
 @views.route('/delete_task', methods=["POST"])
 @login_required
 def delete_task():
@@ -141,49 +109,6 @@ def delete_task():
     flash('Task deleted.', 'success')
     return redirect(url_for('views.view_project', project_id=project_id))
 
-
-# @views.route('/delete_task', methods=["POST"])
-# @login_required
-# def delete_task():
-#     task_id = request.form.get("task_id")
-#     task = Task.query.filter_by(id=task_id).first()
-#     db.session.delete(task)
-#     db.session.commit()
-#     flash('Task deleted.', 'success')
-#     return redirect(url_for('views.view_project'))
-
-
-
-# @views.route('/edit_task', methods=['GET', 'POST'])
-# @login_required
-# def edit_task():
-#     if request.method == 'POST':
-#         # Get the form data
-#         task_id = request.form.get("task_id")
-#         title = request.form.get("title")
-#         content = request.form.get("content")
-#         status = request.form.get("status")
-
-#         project = Project.query.filter_by(user_id=current_user.id).first()
-#         project_id = project.id
-#         if not project:
-#             flash('Project not found.', 'error')
-#             return redirect(url_for('views.view_project', project_id=project_id))
-
-#         task = Task.query.filter_by(id=task_id).first()
-#         if not task:
-#             flash('Task not found.', 'error')
-#             return redirect(url_for('views.view_project', project_id=project_id))
-
-#         # Update the Task's details
-#         task.title = title
-#         task.content = content
-#         task.status = status
-#         db.session.commit()
-
-#         flash('Task updated successfully.', 'success')
-#         return redirect(url_for('views.view_project', project_id=project_id))
-#     return render_template('edit_task.html')
 
 @views.route('/edit_task', methods=["GET", "POST"])
 @login_required
@@ -217,7 +142,6 @@ def edit_task():
         db.session.commit()
         flash('Task updated.', 'success')
         return redirect(url_for('views.view_project', project_id=task.project_id))
-
 
 
 @views.route('/new_task', methods=['GET', 'POST'])

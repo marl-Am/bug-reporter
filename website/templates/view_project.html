@@ -78,7 +78,7 @@
                     <h5 class="card-header text-center mb-2" id="{{ task.status }}">{{ task.status }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Title: {{ task.title }}</h6>
                     <p class="card-text">{{ task.content }}</p>
-                    <p class="card-text">{{ task.created_on }}</p>
+                    <p class="card-text">Created: {{ task.created_on }}</p>
                     <div>
                         <form method="get" action="{{url_for('views.edit_task')}}" class="d-inline-block">
                             <input type="hidden" name="task_id" value="{{task.id}}">

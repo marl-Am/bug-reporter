@@ -8,6 +8,7 @@ Postgres
 Local.session.sql
 Postgres Local.session.sql
 
+env.py
 # C extensions
 *.so
 

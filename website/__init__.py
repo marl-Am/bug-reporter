@@ -2,14 +2,15 @@ import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from .env import DATABASE_URI, SECRET_KEY
 
 db = SQLAlchemy()
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://:@localhost:5432/BUG_REPORTER_DB'
-    app.config['SECRET_KEY'] = ''
+    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+    app.config['SECRET_KEY'] = SECRET_KEY
     db.init_app(app)
 
     from .views import views
