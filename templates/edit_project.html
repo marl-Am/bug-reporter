@@ -19,7 +19,7 @@
     <div class="container">
         <div class="form-container">
 
-            <form method="post" action="{{ url_for('views.edit_project') }}">
+            <form method="post" action="{{ url_for('edit_project') }}">
                 <input type="hidden" name="project_id" value="{{ project.id }}">
                 <h3 class="mt-2 text-center">Edit Project</h3>
                 <div class="form-group mt-2">
@@ -42,7 +42,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-success mt-4">Update</button>
-                <a href="{{ url_for('views.user_dashboard') }}" class="btn btn-danger mt-4">Cancel</a>
+                <a href="{{ url_for('user_dashboard') }}" class="btn btn-danger mt-4">Cancel</a>
             </form>
 
         </div>
