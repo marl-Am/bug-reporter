@@ -2,16 +2,27 @@ import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from .env import DATABASE_URI, SECRET_KEY
+from .env import SECRET_KEY, HOST, USERNAME, PASSWORD, DB_NAME
 
-db = SQLAlchemy()
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+
+    SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{username}:{password}@{hostname}/{databasename}".format(
+        username=USERNAME,
+        password=PASSWORD,
+        hostname=HOST,
+        databasename=DB_NAME,
+    )
+
+    app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+    app.config["SQLALCHEMY_POOL_RECYCLE"] = 299
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config['SECRET_KEY'] = SECRET_KEY
-    db.init_app(app)
+
+    db = SQLAlchemy(app)
+
 
     from .views import views
     from .auth import auth
