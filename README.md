@@ -11,19 +11,19 @@ This is the homepage.
 ![home](screenshots\home.png)
 
 Register your account.
-![home](screenshots\Register.png)
+![register](screenshots\Register.png)
 
 Create new projects.
-![home](screenshots\NewProject.png)
+![newProject](screenshots\NewProject.png)
 
 View the project dashboard.
-![home](screenshots\ProjectDashboard.png)
+![projectDashboard](screenshots\ProjectDashboard.png)
 
 View the tasks dashboard.
-![home](screenshots\Tasksdashboard.png)
+![taskDashboard](screenshots\Tasksdashboard.png)
 
 Go to Account to update the user's information.
-![home](screenshots\UpdateUserDetails.png)
+![details](screenshots\UpdateUserDetails.png)
 
 Login using your new information.
-![home](screenshots\login.png)
+![login](screenshots\login.png)
