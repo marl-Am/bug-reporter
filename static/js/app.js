@@ -1,6 +1,19 @@
 
 window.onload = function () {
 
+    // Delete user account confirmation
+    $(document).ready(function () {
+
+        $("#delete-account-button").click(function () {
+            $("#confirm-delete-modal").modal("show");
+        });
+
+        $("#confirm-delete-button").click(function () {
+            $("#delete-account-form form").submit();
+        });
+
+    });
+
 
     // Get references to the password inputs and the submit button
     const passwordInput = document.getElementById("password");
